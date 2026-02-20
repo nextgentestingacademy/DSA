@@ -1,57 +1,67 @@
 package tree;
 
-class Node2 {
-	int data;
-	Node2 left, right;
-	
-	Node2(int value){
-		data = value;
-		left = right = null;
-	}
+// Class representing a NodeI in the BST
+class NodeI {
+    int data;
+    NodeI left, right;
+
+    public NodeI(int item) {
+        data = item;
+        left = right = null;
+    }
 }
 
-public class InsertBST {
+// Insert Binary Search Tree class
+class InsertBST {
 
-	Node2 root;
-	
-	//left --> root --> right
-	static void inorder(Node2 root) {
-		if(root !=null) {
-			inorder(root.left);
-			System.out.print(root.data + " ");
-			inorder(root.right);
-		}
-	}
-	
-	static Node2 insert(Node2 root, int key) {
-		//create a new node incase you hit null pointer
-		if(root == null) {
-			return new Node2(key);
-		}
-		
-		//if value is less than root.data, traverse the left side of the BST 
-		if(key<root.data) {
-			root.left = insert(root.left,key);
-		}
-		
-		//if value is greater than root.data, traverse the right side of the BST
-		if(key>root.data) {
-			root.right= insert(root.right,key);
-		}
-		
-		return root;
-	}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		InsertBST tree = new InsertBST();
-		tree.root = insert(tree.root, 50);
-		tree.root = insert(tree.root, 30);
-		tree.root = insert(tree.root, 20);
-		tree.root = insert(tree.root, 70);
-		tree.root = insert(tree.root, 90);
-		
-		System.out.println("Inorder traversal of this tree");
-		inorder(tree.root);
-	}
+    NodeI root;
+
+    // Recursive function to insert a new value
+    static NodeI insert(NodeI root, int value) {
+
+        // Base case: if tree is empty, create new NodeI
+        if (root == null) {
+            return new NodeI(value);
+        }
+
+        // If key is smaller, go left
+        if (value < root.data) {
+            root.left = insert(root.left, value);
+        }
+        // If key is greater, go right
+        else if (value > root.data) {
+            root.right = insert(root.right, value);
+        }
+
+        // Return root unchanged
+        return root;
+    }
+
+    // Inorder traversal (Left -> Root -> Right)
+    static void inorder(NodeI root) {
+
+        if (root != null) {
+            inorder(root.left);
+            System.out.print(root.data + " ");
+            inorder(root.right);
+        }
+    }
+
+    // Main method
+    public static void main(String[] args) {
+
+        InsertBST tree = new InsertBST();
+
+        // Insert Nodes (IMPORTANT: assign returned value to root)
+        tree.root = insert(tree.root, 50);
+        tree.root = insert(tree.root, 30);
+        tree.root = insert(tree.root, 70);
+        tree.root = insert(tree.root, 20);
+        tree.root = insert(tree.root, 40);
+        tree.root = insert(tree.root, 60);
+        tree.root = insert(tree.root, 80);
+
+        System.out.println("Inorder traversal of the BST:");
+        inorder(tree.root);
+    }
 }
